@@ -1,0 +1,41 @@
+
+{% extends "base_form.html" %}
+	{% block content %}
+	{% load static %}
+    <link rel="stylesheet"  href="{% static 'css/client_request.css' %}">
+	<div class="body_log">
+	<div class="login-form">
+		<h1>Basic informations</h1>
+		<form action="{% url 'client_register' %}" method="post">
+			{% csrf_token %}
+			<div class="form-group"> 
+				{{ form.name }}
+			</div>
+			<div class="form-group">
+				{{ form.firstname }}
+			</div>
+			<div class="form-group">
+				{{ form.email }}
+			</div>
+			<div class="form-group">
+				{{ form.phonenumber }}
+			</div>
+			<div class="checkbox">
+				<p>Entreprise</p>
+				{{ form.entreprise }}
+			</div>
+			<p><input type="submit" class="btn" value="Next"></p>
+			<script type="text/javascript">
+				document.addEventListener("DOMContentLoaded", function() {
+					// Sélectionne les champs par leur id et ajoute des placeholders
+					document.getElementById("id_firstname").setAttribute("placeholder", "Firstname");
+					document.getElementById("id_name").setAttribute("placeholder", "Name");
+					document.getElementById("id_phonenumber").setAttribute("placeholder", "Phone number");
+					document.getElementById("id_email").setAttribute("placeholder", "Email");
+				});
+			</script>
+	   </form>
+</div>
+</div>
+{% endblock %}
+

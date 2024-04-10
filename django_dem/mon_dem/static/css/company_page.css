@@ -1,0 +1,339 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	/*font-family: "Poppins, sans-serif;*/
+}
+
+/* Container Event caché et relié a event_form.html */
+
+#eventFormContainer {
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2; /* ensure it's above other content */
+}
+
+.eventForm {
+	width: 25rem;
+	height: 20rem;
+	margin: auto;
+	padding: auto;
+	padding-bottom: 1rem;
+	background: #fff;
+	box-shadow: 0 0 10px 0px rgba(0, 0, 0, .1);
+	border-radius: 20px;
+}
+
+.eventForm > div {
+	margin: 1rem;
+	font-size: 1.5rem;
+}
+
+.closeButton {
+	color: #b8a8f8;
+	font-size: 2rem;
+	margin-left: 90%;
+	margin-top: .5rem;
+}
+
+.closeButton, .closeButton:hover {
+    border: none;
+    background-color: transparent;
+    text-decoration: none; /* Désactive le soulignement ou tout autre effet de texte */
+}
+
+.eventForm .containForm > div {
+	display: flex;
+	justify-content: center;
+	margin: auto;
+	font-size: 1.2rem;
+}
+
+.containForm p {
+	padding: .5rem 3%;
+}
+
+.eventForm .containForm > div > div {
+	width: 75%;
+	height: 2.5rem;
+	display: flex;
+	justify-content: center;
+	margin: auto;
+	margin-bottom: 1.2rem;
+	padding: .5rem 3%;
+	border-radius: 40px;
+	border: 2px solid rgba(255, 255, 255, .2);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	background: #b8a8f8;
+}
+
+#id_description, #id_start, #id_end {
+	width: 100%;
+	height: 100%;
+	border: none;
+	outline: none;
+	padding: .5rem 3%;
+	font-size: 16px;
+	background: transparent;
+	color: #fff;
+}
+
+#id_description::placeholder {
+	color: #fff;
+}
+
+.eventForm .btn-div {
+	display: flex;
+	justify-content: center;
+	border: 2px solid rgba(255, 255, 255, .2)
+}
+
+.eventForm .btn {
+	width: 80%;
+	padding: .5rem 3%;
+	background-image: linear-gradient(to right, #d8a8e6 0%, #c8a8f8 50%, #b8a8f8 100%);
+	border: none;
+	outline: none;
+	border-radius: 40px;
+	border: 2px solid rgba(255, 255, 255, .2);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	cursor: pointer;
+	font-size: 16px;
+	color: #fff;
+	font-weight: 600;
+}
+
+.eventForm .btn:hover {
+	box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent; /* semi-transparent black */
+    z-index: 1; /* behind the modal */
+}
+
+body.blurred > :not(#eventFormContainer) {
+    filter: blur(5px);
+}
+
+/* Calendrier */
+
+.calendar {
+	width: 90%;
+	height: auto;
+	margin: auto;
+	padding: auto;
+	text-align: center;
+	background: transparent;
+	padding-top: 30px;
+}
+
+.calendar h2 {
+	font-size: 2rem;
+	color: #fff;
+	margin-bottom: 3rem;
+}
+
+.calendar .schedule {
+	display: flex;
+	margin: auto;
+	padding: auto;
+	justify-content: center;
+	gap: 4rem;
+}
+
+.schedule .add-event {
+	width: 23%;
+	height: 20%;
+	display: flex;
+	background: rgb(216,183,241);
+	border: 2px solid rgba(255, 255, 255, .2);
+	backdrop-filter: blur(20px);
+	border-radius: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	padding: 1rem 4%;
+	margin-bottom: 2rem;
+	gap: 1rem;
+}
+
+.schedule .add-event i {
+	font-size: 2rem;
+	color: #fff;
+}
+
+.schedule .add-event p {
+	font-size: 1.5rem;
+	color: #fff;
+}
+
+.calendar .today {
+	width: 40%;
+	background: rgb(216,183,241);
+	border: 2px solid rgba(255, 255, 255, .2);
+	backdrop-filter: blur(20px);
+	border-radius: 30px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	padding: 2rem 4%;
+	margin-bottom: 2rem;
+	
+}
+
+.today #currentDay {
+	font-size: 1.5rem;
+	color: #fff;
+	margin-bottom: .5rem;
+}
+
+.today .time-slot {
+	display: flex;
+	gap: .5rem;
+	color: #fff;
+}
+
+.today .nothing {
+	gap: .5rem;
+	color: #fff;
+}
+
+#clock {
+	position: relative;
+	width: 200px;
+	height: 200px;
+	border: 2px solid black;
+	border-radius: 50%;
+	background-color: white;
+}
+  
+.hand {
+	position: absolute;
+	bottom: 50%;
+	left: 50%;
+	transform-origin: 50% 100%;
+	background-color: black;
+}
+  
+#hour {
+	width: 6px;
+	height: 50px;
+	margin-left: -3px;
+}
+  
+#minute {
+	width: 4px;
+	height: 70px;
+	margin-left: -2px;
+}
+  
+#second {
+	width: 2px;
+	height: 90px;
+	margin-left: -1px;
+	background-color: red;
+  
+}
+  
+
+.calendar #calendar {
+	width: 100%;
+  	height: 100%;
+	background: rgb(216,183,241);
+	border: 2px solid rgba(255, 255, 255, .2);
+	backdrop-filter: blur(20px);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	padding: 3rem 7%;
+}
+
+.avis {
+	width: 80%;
+	height: 40rem;
+	margin: auto;
+	padding: auto;
+	text-align: center;
+	background: transparent;
+	padding-top: 30px;
+    
+}
+
+.row {
+	display: flex;
+	justify-content: center;
+	gap: 20px; /* Ajustez cette valeur selon l'espacement désiré */
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.avis h1 {
+	margin-bottom: 20px;
+}
+
+.avis-col {
+	width: 80%;
+	max-height: 200px;
+	border-radius: 30px;
+	margin-bottom: 5%;
+	text-align: left;
+	background: #fff;
+	backdrop-filter: blur(20px);
+	box-shadow: 0 0 10px 0px rgba(0, 0, 0, .1);
+	padding: 25px;
+	display: flex;
+	transition: 0.5s;
+}
+.avis-col .corps {
+	overflow-y: auto;
+    text-overflow: auto;
+	
+}
+.avis-col:hover {
+	box-shadow: 0 0 20px 0px rgba(0, 0, 0, .2);
+}
+
+.avis-col i {
+	font-size: 25px;
+	margin-left: 5px;
+	margin-right: 30px;
+	border-radius: 50%;
+}
+
+.avis-col p {
+	font-size: 15px;
+}
+
+.avis-col .rating {
+	display: flex;
+	padding: 0;
+	
+}
+
+.avis-col .rating i {
+	font-size: 20px;
+	color: plum;
+	margin-right: -1px;
+	
+}
+
+.activate {
+	width: 30%;
+	min-width: 100px;
+	height: 45px;
+	background-image: linear-gradient(to right, #d8a8e6 0%, #c8a8f8 50%, #b8a8f8 100%);
+	border: none;
+	outline: none;
+	border-radius: 40px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	font-size: 16px;
+	color: #333;
+	margin-left: 20px;
+	font-weight: 600;
+}
+
+.activate:hover {
+	
+}

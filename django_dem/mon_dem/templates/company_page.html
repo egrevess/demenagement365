@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %} 
+	<link rel="stylesheet"  href="{% static 'css/company_page.css' %}">
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+	<section id="eventFormContainer" style="display:none;">
+	</section>
+
+	<section class="calendar">
+		<h2> Your calendar </h2>
+		<div class="schedule">
+			<div id="today" class="today">
+				<div id="currentDay"></div>
+				<div id="dailySchedule"></div>
+			</div>
+			<div class="add-event">
+				<i id="add-event" class='bx bx-calendar-plus'></i>
+				<p>Add event</p>
+			</div>
+		</div>
+		<div id='calendar'>
+		</div>
+
+	</section>
+	<section class="presentation">
+	
+	</section>
+	<section class="avis">
+		<h1> What our client says</h1>
+		<div class="row">
+			{% if reviews %}
+				{% for review in reviews %}
+				<div class="avis-col">
+					<i class='bx bxs-user-circle'></i>
+					<div class="corps">
+						<div class="rating" data-rating="{{ review.rating }}">
+						</div>
+						<h3>{{review.client.firstname}} {{review.client.name}}</h3>
+						<p> {{review.comment}}</p>
+					</div>
+					<button data-id="{{ review.id }}" data-action="{% if review.active == True %}des{% endif %}activate"
+							class="activate">
+								  {% if review.active == False %}
+									Activate
+								  {% else %}
+									Desactivate
+					 			{% endif %}
+					</button>
+				</div>
+				{% endfor %}
+			{% endif %}
+		</div>
+	</section>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			// Lire le rating du conteneur
+			var ratingContainers = document.querySelectorAll('.rating');
+			ratingContainers.forEach(function(container) {
+			var rating = parseFloat(container.getAttribute('data-rating'));
+			var maxRating = 5;
+			var htmlContent = '';
+		
+			// Générer les étoiles pleines
+			for (var i = 1; i <= rating; i++) {
+				htmlContent += "<i class='bx bxs-star'></i>";
+			}
+			// Générer les étoiles vides
+			if (rating % 1 !== 0) { // Vérifie s'il y a une partie décimale
+				htmlContent += "<i class='bx bxs-star-half'></i>";
+				rating = Math.ceil(rating); // Arrondir au nombre entier suivant pour la logique des étoiles vides
+			}
+			for (var i = rating + 1; i <= maxRating; i++) {
+				htmlContent += "<i class='bx bx-star'></i>";
+			}
+		
+			// Mettre à jour le HTML du conteneur
+			container.innerHTML = htmlContent;
+		});
+	});
+	</script>
+	<script src="//cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', (event) => {
+			const url = '{% url "review_activate" %}';
+			document.querySelectorAll('.activate').forEach(button => {
+				button.addEventListener('click', function(e){
+					e.preventDefault();
+					let activateButton = this;
+					let options = {
+						method: 'POST',
+						headers: {
+							'X-CSRFToken': Cookies.get('csrftoken'),
+							'Content-Type': 'application/x-www-form-urlencoded'
+						},
+						body: `id=${activateButton.dataset.id}&action=${activateButton.dataset.action}`
+					};
+					// Envoie la requête HTTP
+					fetch(url, options)
+					.then(response => response.json())
+					.then(data => {
+						if (data['status'] === 'ok') {
+							// Basculer entre activer et désactiver
+							if (activateButton.dataset.action == 'activate') {
+								activateButton.dataset.action = 'desactivate';
+								activateButton.textContent = 'Desactivate';
+							} else {
+								activateButton.dataset.action = 'activate';
+								activateButton.textContent = 'Activate';
+                    }
+                }
+            });
+        });
+    });
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+	var currentDayElement = document.getElementById('currentDay');
+    var today = new Date();
+    var options = { weekday: 'long', month: 'long', day: 'numeric' };
+    currentDayElement.innerHTML += today.toLocaleDateString('fr-FR', options);
+	var dailyScheduleElement = document.getElementById('today');
+
+	var calendarEl = document.getElementById('calendar');
+	var calendar = new FullCalendar.Calendar(calendarEl, {
+		initialView: 'dayGridMonth',
+		selectable: true,
+		select: function(info) {
+			var startDate = info.startStr; // Date de début de la sélection
+			var endDate = info.endStr; // Date de fin de la sélection
+			console.log("Selected from " + startDate + " to " + endDate);
+			// Ici, vous pourriez ouvrir un dialogue ou un formulaire pour confirmer la disponibilité,
+			// puis envoyer la plage sélectionnée au backend via AJAX.
+		},
+		events: function(fetchInfo, successCallback, failureCallback) {
+			fetch('{% url "calendar_data" %}') // Assurez-vous que l'URL est correcte
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+				// Transformer les données de disponibilités et d'événements pour FullCalendar
+				displayTodayEvents(data, today, dailyScheduleElement);
+				var transformedEvents = data.disponibilites.map(dispo => ({
+					title: 'Disponible',
+					start: dispo.start,
+					end: dispo.end,
+					description: dispo.description,
+					color: '#28a745' // Vert pour les disponibilités
+				})).concat(data.events.map(event => ({
+					title: event.title,
+					start: event.start,
+					end: event.end,
+					description: event.description,
+					color: '#007bff' // Bleu pour les événements
+				})));
+				successCallback(transformedEvents);
+			})
+			.catch(error => {
+				console.error(error);
+				failureCallback(error);
+			});
+		}
+	});
+	calendar.render();
+	});
+	function displayTodayEvents(data, today, dailyScheduleElement) {
+		let todayEvents = data.events.filter(event => {
+            let eventDate = new Date(event.start).toDateString();
+            return eventDate === today.toDateString();
+        });
+
+        // Pour chaque événement d'aujourd'hui, créez un div d'heure et un div d'événement
+        todayEvents.forEach(event => {
+            let eventStart = new Date(event.start);
+            let eventHour = eventStart.getHours();
+
+            let timeSlot = document.createElement('div');
+            timeSlot.classList.add('time-slot');
+            timeSlot.textContent = `${eventHour.toString().padStart(2, '0')}:00`;
+            dailyScheduleElement.appendChild(timeSlot);
+
+            let eventDiv = document.createElement('div');
+            eventDiv.classList.add('event');
+            eventDiv.textContent = event.title; // Ajoutez ici la description si nécessaire
+            timeSlot.appendChild(eventDiv);
+        });
+
+        if (todayEvents.length === 0) {
+            let noEventsDiv = document.createElement('div');
+			noEventsDiv.classList.add('nothing');
+            noEventsDiv.textContent = "Pas d'événements aujourd'hui.";
+            dailyScheduleElement.appendChild(noEventsDiv);
+        }
+	}
+  </script>
+
+
+  <script>
+	document.getElementById('add-event').addEventListener('click', toggleForm);
+	function toggleForm() {
+		var url = '{% url "add_event"%}'
+		var formContainer = document.getElementById('eventFormContainer');
+		var isDisplayed = formContainer.style.display === "block";
+		$.ajax ({
+			url: url,
+			type: 'get',
+			success: function(data) {
+				formContainer.style.display = isDisplayed ? "none" : "block";
+				if (isDisplayed) {
+					document.body.classList.remove('blurred');
+					removeModalBackdrop();
+				} else {
+					document.body.classList.add('blurred');
+					createModalBackdrop();
+					formContainer.innerHTML = data.form; // Insérer le formulaire dans le conteneur
+        			attachFormSubmitHandler(); 
+				}
+			}
+		})
+	}
+	function createModalBackdrop() {
+		var backdrop = document.createElement('div');
+		backdrop.classList.add('modal-backdrop');
+		backdrop.onclick = toggleForm; // Clicking outside the form closes it
+		document.body.appendChild(backdrop);
+	}
+
+	function removeModalBackdrop() {
+		var backdrop = document.querySelector('.modal-backdrop');
+		if (backdrop) {
+			document.body.removeChild(backdrop);
+		}
+	}
+	function attachFormSubmitHandler() {
+		$("#eventForm").on('submit', function(e) {
+			e.preventDefault();
+			var url = '{% url "add_event"%}'
+			var csrftoken = Cookies.get('csrftoken');
+			$.ajax({
+				url: url,
+				type: 'post', // Utiliser POST pour soumettre le formulaire
+				data: $(this).serialize(), // Sérialiser les données du formulaire
+				headers: {
+					"X-CSRFToken": csrftoken
+				},
+				success: function(data) {
+					if (data.success) {
+						// alert('Plainte soumise avec succès!');
+						console.log('Événement ajouté avec succès');
+						toggleForm();
+						window.location.reload();
+						// Fermer le formulaire ou afficher un message de succès ici
+					} else {
+					// Gérez les erreurs ici
+					console.error('Erreur lors de l\'ajout de l\'événement', data.errors);
+					}
+				}
+			})
+			.catch(error => console.error('Erreur AJAX', error));
+		});
+	}
+  </script>
+ 
+	
+{% endblock %}

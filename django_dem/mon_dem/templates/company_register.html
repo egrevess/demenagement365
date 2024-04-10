@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+	{% block content %}
+	{% load static %}
+
+    <link rel="stylesheet"  href="{% static 'css/company_inscription.css' %}"> <!-- Lien vers votre fichier CSS -->
+
+        <form action="{% url 'company_register' %}" method="post">
+		{{user_form.as_p}}
+		{{ form.as_p }}
+     	{% csrf_token %}
+     <p><input type="submit" value="Add company"></p>
+        </form>
+
+	{% endblock %}
+
+   

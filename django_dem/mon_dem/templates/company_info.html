@@ -1,0 +1,123 @@
+
+	{% extends "base.html" %}
+	{% block content %}
+	{% load static %}
+    <link rel="stylesheet"  href="{% static 'css/company_info.css' %}">
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <section class="home" id="home">
+		<div class="content">
+			<div class="name">
+				<i>Icon </i>
+				<h2>{{company.companyname}}</h2>
+			</div>
+			<div class="navbar">
+				<a href="#projets">Projets réalisés</a>
+				<a href="#about">About us</a>
+				<a href="#service">Services et zones couvertes</a>
+				<a href="#localisation">Localisation</a>
+				<a href="#review">Avis</a>
+			</div>
+		</div>
+		<div class="infos">
+			<h2>Details</h2>
+			<div class="info">
+				<i class='bx bxs-phone'></i>
+				<p>{{company.phonenumber}}</p>
+			</div>
+			<div class="info">
+				<i class='bx bxs-envelope'></i>
+				<p>{{email}}</p>
+			</div>
+			<div class="info">
+				<i class='bx bxl-instagram'></i>
+				<i class='bx bxl-facebook-square'></i>
+			</div>
+		</div>
+        <!-- Détails des services ici -->
+    </section>
+
+	<section id="projet" class="projets">
+		<div class="content">
+			<h2 class="title">Projets réalisés</h2>
+			<div class="projet">
+				<h2> </h2>
+			</div>
+		</div>
+	</section>
+
+	<section id="about" class="about">
+		<div class="content">
+			<h2 class="title">About us</h2>
+			<p></p>
+		</div>
+	</section>
+
+	<section id="service" class="services">
+		<div class="content">
+			<h2 class="title" >Services</h2>
+			<div class="service">
+				{% if services %}
+					{% for service in services %}
+					<p>{{ service.name }}</p>
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+	</section>
+
+	<section id="localisation" class="localisation">
+		<div class="content">
+			<h2 class="title">Localisation</h2>
+			<p></p>
+		</div>
+	</section>
+
+	<section class="avis" id="review">
+		<h1> What our client says</h1>
+		<div class="row">
+			{% if reviews %}
+				{% for review in reviews %}
+				<div class="avis-col">
+					<i class='bx bxs-user-circle'></i>
+					<div class="corps">
+						<div class="rating" data-rating="{{ review.rating }}">
+						</div>
+						<h3 class="client" >{{review.client.firstname}} {{review.client.name}}</h3>
+						<p> {{review.comment}}</p>
+					</div>
+				</div>
+				{% endfor %}
+			{% endif %}
+		</div>
+	</section>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			// Lire le rating du conteneur
+			var ratingContainers = document.querySelectorAll('.rating');
+			ratingContainers.forEach(function(container) {
+			var rating = parseFloat(container.getAttribute('data-rating'));
+			var maxRating = 5;
+			var htmlContent = '';
+		
+			// Générer les étoiles pleines
+			for (var i = 1; i <= rating; i++) {
+				htmlContent += "<i class='bx bxs-star'></i>";
+			}
+			// Générer les étoiles vides
+			if (rating % 1 !== 0) { // Vérifie s'il y a une partie décimale
+				htmlContent += "<i class='bx bxs-star-half'></i>";
+				rating = Math.ceil(rating); // Arrondir au nombre entier suivant pour la logique des étoiles vides
+			}
+			for (var i = rating + 1; i <= maxRating; i++) {
+				htmlContent += "<i class='bx bx-star'></i>";
+			}
+		
+			// Mettre à jour le HTML du conteneur
+			container.innerHTML = htmlContent;
+		});
+	});
+	</script>
+	{% endblock %}

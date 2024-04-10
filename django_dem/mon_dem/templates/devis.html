@@ -1,0 +1,258 @@
+{% extends "base_form.html" %}
+	{% block content %}
+	{% load static %}
+    <link rel="stylesheet"  href="{% static 'css/devis.css' %}"> <!-- Lien vers votre fichier CSS -->
+	
+		<div class="container">
+			<div class="form">
+			<form action="{% url 'add_devis' client.id %}" method="post">
+				<div class="page">
+					<div class="title">Adresse de départ</div>
+					<div class="container-rue">
+					<div class="field rue">
+						<div class="label">Rue</div>
+						<div>
+							{{ adresse_depart_form.rue }}
+						</div>
+					</div>
+					<div class="field numero">
+						<div class="label">Numéro</div>
+						<div>
+							{{ adresse_depart_form.numero_rue }}
+						</div>
+					</div>
+					</div>
+					<div class="container-rue">
+					<div class="field numero">
+						<div class="label">Code postal</div>
+						<div>
+							{{ adresse_depart_form.code_postal }}
+						</div>
+					</div>
+					<div class="field rue">
+						<div class="label">Commune</div>
+						<div>
+							{{ adresse_depart_form.commune }}
+						</div>
+					</div>
+					</div>
+					<div class="field">
+						<div class="label">Region</div>
+						<div>
+							{{ adresse_depart_form.region }}
+						</div>
+					</div>
+					<div class="field">
+						<div class="label">Pays</div>
+						<div>
+							{{ adresse_depart_form.pays }}
+						</div>
+					</div>
+					<div class="field">
+						<div class="label">Type de Logement</div>
+						<div>
+							{{ adresse_depart_form.type_logement }}
+						</div>
+					</div>
+					<div class="field">
+						<div class="label">Etage</div>
+						<div>
+							{{ adresse_depart_form.etage }}
+						</div>
+					</div>
+					<div class="field btns">
+						<button class="next" type="button"> Next</button>
+					</div>
+				</div>
+				<div class="page">
+					<div class="title">Adresse d'arrivée</div>
+					<div class="container-rue">
+					<div class="field rue">
+						<div class="label">Rue</div>
+						<div>
+							{{ adresse_arrivee_form.rue }}
+						</div>
+					</div>
+					<div class="field numero">
+						<div class="label">Numéro</div>
+						<div>
+							{{ adresse_arrivee_form.numero_rue }}
+						</div>
+					</div>
+					</div>
+					<div class="container-rue">
+					<div class="field numero">
+						<div class="label">Code postal</div>
+						<div>
+							{{ adresse_arrivee_form.code_postal }}
+						</div>
+					</div>
+					<div class="field rue">
+						<div class="label">Commune</div>
+						<div>
+							{{ adresse_arrivee_form.commune }}
+						</div>
+					</div>
+					</div>
+					<div class="field">
+						<div class="label">Region</div>
+						<div>
+							{{ adresse_arrivee_form.region }}
+						</div>
+					</div>
+					<div class="field">
+						<div class="label">Pays</div>
+						<div>
+							{{ adresse_arrivee_form.pays }}
+						</div>
+					</div>
+					<div class="field">
+						<div class="label">Type de logement</div>
+						<div>
+							{{ adresse_arrivee_form.type_logement }}
+						</div>
+					</div>
+					<div class="field">
+						<div class="label">etage</div>
+						<div>
+							{{ adresse_arrivee_form.etage }}
+						</div>
+					</div>
+					<div class="field btns">
+						<button class="prev" type="button" disabled>Previous</button>
+						<button class="next" type="button" disabled>Next</button>
+					</div>
+				</div>
+				<div class="page devis">
+					<div class="title">Info Devis</div>
+					<div class="label h1">Vos disponibilités</div>
+					<div class="container-date">
+					<div class="field">
+						<div class="label">date début</div>
+						<div>
+							{{ moving_request_form.date_dispo_debut }}
+						</div>
+					</div>
+					<div class="field">
+						<div class="label">date fin</div>
+						<div>
+							{{ moving_request_form.date_dispo_fin }}
+						</div>
+					</div>
+					</div>
+					<div class="field">
+						<div class="label">Volume estimé en m3</div>
+						<div>
+							{{ moving_request_form.volume_estime }}
+						</div>
+					</div>
+					<div class="container-checkbox">
+					<div class="field">
+						<div class="label ">national</div>
+						<div>
+							{{ moving_request_form.national }}
+						</div>
+					</div>
+					<div class="field">
+						<div class="label">international</div>
+						<div>
+							{{ moving_request_form.international }}
+						</div>
+					</div>
+					</div>
+					<div class="field">
+						<div class="label">Services disponibles</div>
+						<div>
+							{{ moving_request_form.service }}
+						</div>
+					</div>
+					<div class="field recom">
+						<div class="label">Recommendation</div>
+						<div>
+							{{ moving_request_form.recommendation }}
+						</div>
+					</div>
+					<div class="field btns">
+						<button class="prev" type="button" disabled>Previous</button>
+						<button type="submit" class="Send-devis">Send devis</button>
+					</div>
+				</div>
+					{% csrf_token %}
+		   </form>
+			</div>   
+		</div>
+		<script type="text/javascript">
+			document.addEventListener("DOMContentLoaded", function() {
+				// Sélectionne les champs par leur id et ajoute des placeholders
+				document.getElementById("id_depart-rue")
+				document.getElementById("id_depart-numero_rue")
+				document.getElementById("id_depart-code_postal")
+				document.getElementById("id_depart-commune")
+				document.getElementById("id_depart-region")
+				document.getElementById("id_depart-pays")
+				document.getElementById("id_depart-type_logement")
+				document.getElementById("id_depart-etage")
+				document.getElementById("id_arrivee-rue")
+				document.getElementById("id_arrivee-numero_rue")
+				document.getElementById("id_arrivee-code_postal")
+				document.getElementById("id_arrivee-commune")
+				document.getElementById("id_arrivee-region")
+				document.getElementById("id_arrivee-pays")
+				document.getElementById("id_arrivee-type_logement")
+				document.getElementById("id_arrivee-etage")
+				document.getElementById("id_service")
+				document.getElementById("id_national")
+				document.getElementById("id_international")
+				document.getElementById("id_date_dispo_debut")
+				document.getElementById("id_date_dispo_fin")
+				document.getElementById("id_recommendation")
+				//document.getElementById("custom_id_recommendation")
+			});
+		</script>
+
+<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", function() {
+		let currentPageIndex = 0;
+		const pages = document.querySelectorAll(".form .page");
+		const prevBtns = document.querySelectorAll(".prev");
+		const nextBtns = document.querySelectorAll(".next");
+	
+		function updatePageVisibility() {
+			pages.forEach((page, index) => {
+				if (index === currentPageIndex) {
+					page.style.display = "block"; // Affiche la page actuelle
+				} else {
+					page.style.display = "none"; // Masque les autres pages
+				}
+			});
+			// Gère l'état des boutons
+			prevBtns.forEach(btn => btn.disabled = currentPageIndex === 0);
+			nextBtns.forEach(btn => btn.disabled = currentPageIndex === pages.length - 1);
+			window.scrollTo(0, 0);
+		}
+	
+		// Initialise la visibilité des pages
+		updatePageVisibility();
+	
+		// Ajoute des écouteurs d'événements pour les boutons Précédent
+		prevBtns.forEach(btn => btn.addEventListener("click", () => {
+			if (currentPageIndex > 0) {
+				currentPageIndex -= 1;
+				updatePageVisibility();
+			}
+		}));
+	
+		// Ajoute des écouteurs d'événements pour les boutons Suivant
+		nextBtns.forEach(btn => btn.addEventListener("click", () => {
+				if (currentPageIndex < pages.length - 1) {
+					currentPageIndex += 1;
+					updatePageVisibility();
+				}
+		}));
+	});
+	</script>
+
+	{% endblock %}
+
+
+

@@ -1,0 +1,177 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	/*font-family: "Poppins, sans-serif;*/
+}
+
+.container {
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
+.form {
+	width: 40%;
+	height: 650px;
+	background: transparent;
+	backdrop-filter: blur(20px);
+	border-radius: 10px;
+	border: 2px solid rgba(255, 255, 255, .2);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	color: #fff;
+	text-align: center;
+	padding: 30px 10px; 
+	margin: auto;
+	overflow-x: hidden;
+}
+
+.form form {
+	display: flex;
+	width: 400%;
+}
+
+.form form .page {
+	width: 25%;
+}
+
+.form form .page .title {
+	font-size: 25px;
+	font-weight: 500;
+}
+
+.form form .page .field {
+	height: 40px;
+	flex: 1;
+	margin: 30px 0;
+	position: relative; 
+}
+
+.field .label {
+	text-align: left;
+	display: block;
+	margin-left: 10%;
+	margin-bottom: 5px;
+}
+
+.form form .page .container-rue {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+/* Adjustements spécifiques pour les champs rue et numéro */
+.field.rue, .field.numero {
+    flex-grow: 1; /* Permet aux champs de grandir si nécessaire */
+}
+
+.field.rue {
+    flex: 80%; /* Rue prend plus d'espace */
+}
+
+.field.numero {
+    flex: 20%; /* Numéro prend moins d'espace */
+}
+
+.field.btns button {
+	width: 20%;
+	height: 25px;
+	background-image: linear-gradient(to right, #d8a8e6 0%, #c8a8f8 50%, #b8a8f8 100%);
+	border: none;
+	outline: none;
+	border-radius: 40px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	cursor: pointer;
+	font-size: 16px;
+	color: #fff;
+	font-weight: 600;
+}
+
+#id_depart-rue, #id_depart-numero_rue, #id_depart-code_postal, #id_depart-commune, #id_depart-region, #id_depart-pays, #id_depart-type_logement, #id_depart-etage {
+	width: 80%;;
+	height: 15px;
+	background: transparent;
+	outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 10px;
+	font-size: 16px;
+	color: #fff;
+	padding: 20px 45px 20px 20px;
+}
+
+#id_arrivee-rue, #id_arrivee-numero_rue, #id_arrivee-code_postal, #id_arrivee-commune, #id_arrivee-region, #id_arrivee-pays, #id_arrivee-type_logement, #id_arrivee-etage {
+	width: 80%;;
+	height: 15px;
+	background: transparent;
+	outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 10px;
+	font-size: 14px;
+	color: #fff;
+	padding: 20px 45px 20px 20px;
+}
+
+/* Dernière page : Confirmation devis */
+
+.form form .page.devis {
+	width: 25%;
+	height: 100%;
+	overflow-y: auto;
+	flex-direction: column;
+    justify-content: space-between; /* Ceci pousse le contenu en haut et les boutons en bas */
+}
+
+.page.devis .label.h1 {
+	text-align: left;
+	height: 20px;
+	margin-left: 10%;
+}
+
+.form form .page.devis .field {
+	height: 50px;
+	flex: 1;
+	margin: 30px 0;
+	position: relative;
+}
+
+.form form .page.devis .field.recom {
+	height: 80px;
+	flex: 1;
+	margin: 30px 0;
+	position: relative;
+}
+
+.form form .page.devis .container-date {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.form form .page.devis .container-checkbox {
+	width: 100%;
+	height: 30px;
+	display: flex;
+	gap: 5px;
+	padding-left: 25%;
+	padding-right: 15%;
+}
+
+.form form .page.devis .container-checkbox .field{
+	width: 20px;
+	display: flex;
+}
+
+#id_service, #id_recommendation ,#id_volume_estime, #id_national, #id_international, #id_date_dispo_debut, #id_date_dispo_fin{
+	width: 80%;;
+	height: 15px;
+	background: transparent;
+	outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 10px;
+	font-size: 15px;
+	color: #fff;
+	padding: 20px 45px 20px 20px;
+}
+
+
+
+

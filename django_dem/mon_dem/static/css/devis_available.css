@@ -1,0 +1,85 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	/*font-family: "Poppins, sans-serif;*/
+}
+
+.affichage {
+	width: 80%; /* Prend toute la largeur disponible */
+    height: 100vh;
+	margin: auto;
+	padding:auto;
+	text-align: center;
+	background: #fff;
+	padding-top: 30px;
+	overflow-y: auto;
+}
+
+.affichage h1 {
+	margin-bottom: 10px;
+}
+
+.container_devis {
+	display: flex; /* Active Flexbox */
+    flex-direction: column; /* Organise les éléments verticalement */
+    gap: 20px;
+}
+
+.devis_info{
+	height: 60px;
+	margin: auto;
+	align-items: center;
+	display: flex; /* Active Flexbox */
+    gap: 20px;
+	margin-bottom: 20px;
+	background: transparent;
+	box-shadow: 0 0 10px 0px rgba(0, 0, 0, .1);
+	border-radius: 20px;
+	padding: 30px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    display: none; 
+    z-index: 2;
+}
+
+.container_complaint {
+	margin: auto;
+	align-items: center;
+	padding: 30px;
+	padding-bottom: 50px;
+	display: flex; /* Active Flexbox */
+	background: #fff;
+	box-shadow: 0 0 10px 0px rgba(0, 0, 0, .1);
+	border-radius: 20px;
+	z-index: 3;
+}
+
+.container_devis .devis_info:hover {
+	box-shadow: 0 0 20px 0px rgba(0, 0, 0, .1);
+}
+
+.devis_info .complaint {
+
+	background-image: linear-gradient(to right, #d8a8e6 0%, #c8a8f8 50%, #b8a8f8 100%);
+	border: none;
+	outline: none;
+	border-radius: 40px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	font-size: 16px;
+	color: #fff;
+	margin-left: 20px;
+	font-weight: 600;
+	padding: 10px;
+}
+
+.devis_info .complaint:hover {
+	padding: 11px;
+}

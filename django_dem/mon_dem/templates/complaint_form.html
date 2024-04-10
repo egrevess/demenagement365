@@ -1,0 +1,86 @@
+<form action="" method="post" id="complaintForm{{ request_id }}">
+    {% csrf_token %}
+	<button class="close" type="button" id="cancelButton{{ request_id }}">Annuler</button>
+    	{{ form.as_p }}
+    <button class="btn" type="submit">Envoyer la plainte</button>
+</form>
+
+<style>
+	.close {
+		background-image: linear-gradient(to right, #d8a8e6 0%, #c8a8f8 50%, #b8a8f8 100%);
+		border: none;
+		outline: none;
+		border-radius: 40px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+		font-size: 16px;
+		color: #fff;
+		font-weight: 600;
+		padding: 10px;
+		margin-left: 70%;
+	}
+
+	.btn {
+		background-image: linear-gradient(to right, #d8a8e6 0%, #c8a8f8 50%, #b8a8f8 100%);
+		border: none;
+		outline: none;
+		border-radius: 40px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+		font-size: 16px;
+		color: #fff;
+		font-weight: 600;
+		padding: 10px;
+		align-items: right;
+	}
+
+	.btn:hover {
+		box-shadow: 0 0 20px rgba(0, 0, 0, .1);
+	}
+
+	.close:hover {
+		box-shadow: 0 0 20px rgba(0, 0, 0, .1);
+	}
+
+	form {
+		height: 250px;
+		width: 300px;
+		display: flex; /* Active Flexbox */
+		flex-direction: column; /* Organise les éléments verticalement */
+		gap: 15px;
+		margin: left;
+	}
+
+	form .justif {
+		margin: left;
+	}
+
+	#id_justification {
+		font-size: 20px;
+		text-align: left;
+		padding-left: 20px;
+	}
+
+	input[id^="id_justification_"] {
+    /* Vos styles CSS ici, par exemple : */
+		margin-right: 10px;
+		margin-bottom: 10px;
+	}
+
+</style>
+
+<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", function() {
+		// Sélectionne les champs par leur id et ajoute des placeholders
+		document.getElementById("id_justification");
+	});
+	$(document).ready(function() {
+    // Utilisation de la délégation d'événements pour capter le clic sur le bouton "Annuler"
+    // Remplacez '#complaintFormContainer' par l'ID d'un conteneur statique englobant si disponible
+    $(document).on('click', 'button[id^="cancelButton"]', function() {
+        console.log("Bouton Annuler cliqué");
+        // Votre logique pour cacher le formulaire et l'overlay
+        $(".overlay").hide();
+		$(".container_complaint").hide();
+        $(this).closest('form').hide(); // Cache le formulaire contenant le bouton cliqué
+    });
+});
+</script>

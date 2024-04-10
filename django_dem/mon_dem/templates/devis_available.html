@@ -1,0 +1,73 @@
+
+{% extends "base.html" %}
+{% block content %}
+{% load static %} 
+	<link rel="stylesheet"  href="{% static 'css/devis_available.css' %}">
+	<section class="affichage">
+		<div class="overlay"></div>
+		<h1>{{company.companyname}}</h1>
+			{% if devis_list %}
+					{% for devis in devis_list %}
+					<div class="container_devis">
+						<div class="devis_info">
+						<p class="info_client">{{ devis.client.firstname }} {{ devis.client.name }}</p>
+						<p class="date">{{ devis.created}}</p>
+						<button onclick="toggleComplaintForm('{{ devis.id }}')" class="complaint" >Complaint</button>
+					</div>
+					<div class="container_complaint" id="ComplaintForm{{ devis.id }}" style="display:none;"></div>
+					{% endfor %}
+			{% else %}
+				<p>Aucun devis disponible.</p>
+			{% endif %}
+	</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+<script>
+    function toggleComplaintForm(devisId) {
+        var url = "/mon_dem/devis_available/complaint/" + devisId + "/"; // Assurez-vous que cette URL est correcte
+        $.ajax({
+            url: url,
+            type: 'get', // Utiliser GET pour récupérer le formulaire
+            success: function(data) {
+                $("#ComplaintForm" + devisId).html(data.form).show().css("z-index", "2");
+				$(".overlay").show();
+                attachFormSubmitHandler(devisId); // Attacher le gestionnaire de soumission après avoir affiché le formulaire
+
+				$("#cancelButton" + devisId).on('click', function() {
+					console.log("Bouton Annuler cliqué");
+					console.log("Bouton Annuler cliqué pour le devis ID:", devisId);
+                formContainer.hide();
+                $(".overlay").hide();
+            	});
+            }
+        });
+    }
+
+    function attachFormSubmitHandler(devisId) {
+        $("#ComplaintForm" + devisId + " form").on('submit', function(e) {
+            e.preventDefault(); // Empêcher la soumission standard du formulaire
+            var url = "/mon_dem/devis_available/complaint/" + devisId + "/"; // URL pour soumettre le formulaire
+            var csrftoken = Cookies.get('csrftoken'); // Récupérer le jeton CSRF
+            $.ajax({
+                url: url,
+                type: 'post', // Utiliser POST pour soumettre le formulaire
+                data: $(this).serialize(), // Sérialiser les données du formulaire
+                headers: {
+                    "X-CSRFToken": csrftoken
+                },
+                success: function(data) {
+                    if (data.success) {
+                       // alert('Plainte soumise avec succès!');
+						window.location.reload();
+                        // Fermer le formulaire ou afficher un message de succès ici
+                    }
+                },
+                //error: function(xhr, status, error) {
+                //    alert("Erreur: " + xhr.responseText); // Gérer l'erreur
+                //}
+            });
+        });
+    }
+		</script>
+		
+{% endblock %}

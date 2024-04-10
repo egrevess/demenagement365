@@ -1,0 +1,22 @@
+
+.word-container {
+    display: flex;
+    flex-direction: column; /* Les éléments sont empilés verticalement */
+    align-items: flex-start; /* Alignement à gauche */
+    gap: 10px; /* Espace entre les boîtes */
+}
+
+.word-box {
+    display: inline-block; /* Chaque boîte est inline-block */
+    margin: 10px;
+    padding: 20px;
+    /*border: 2px solid #000;*/
+    font-size: 1.5em;
+    background-color: rgb(207, 177, 136);
+}
+
+/* Utilisez une classe supplémentaire pour cibler les deux premières boîtes */
+.word-row {
+    display: flex;
+    gap: 10px; /* Espace entre les boîtes */
+}

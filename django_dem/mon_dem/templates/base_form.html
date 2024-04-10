@@ -1,0 +1,58 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Déménagement 365</title>
+	{% load static %}
+    <link rel="stylesheet"  href="{% static 'css/base_form.css' %}"> <!-- Lien vers votre fichier CSS -->
+	
+</head>
+<body>
+	<header>
+		<div class="header-content">
+			<span>Moving</span>
+		<nav>
+			<ul class="navbar">
+				<!--<li><a href="#services">Services de déménagment</a></li> -->
+				{% if not request.user.is_authenticated %}
+				<li class="dropdown">
+					<a href="javascript:void(0)">Services</a>
+					<div class="dropdown-content">
+						{% for service in services %}
+					<a href="#">{{ service.name }}</a>  <!-- Remplacez nom_du_champ par le champ réel dans votre modèle de service -->
+						{% endfor %}
+						<!-- Plus de liens de services -->
+					</div>
+				</li>
+				<li><a href="#testimonials">Témoignages</a></li>
+				{% endif %}
+				{% if request.user.is_authenticated %}
+	
+					<li {% if section == "connected" %} class="selected"{% endif %}>
+					<a href="{% url 'devis_available' %}">Devis disponibles</a>
+					  </li>
+					  <li>{{ company.companyname }}</li>
+					  <a href="{% url 'logout' %}">Logout</a>
+					  {% else %}
+					<li><a href="#contact">Contact</a></li>
+					<li><a href="{% url 'company_register' %}">Vous avez une société de déménagement</a></li>
+					<li><a href="{% url 'login' %}">Login</a></li>
+				{% endif %}
+			</ul>
+		</nav>
+	</header>
+	<div class="container">
+		{% load static %}
+		{% block content %}
+		{% endblock %}
+	</div>
+		<footer>
+			<p>© 2024 Déménagement 365 - Tous droits réservés</p>
+		</footer>
+	
+</body>
+
+</html> 

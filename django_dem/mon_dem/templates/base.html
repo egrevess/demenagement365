@@ -1,0 +1,156 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Déménagement 365</title>
+	{% load static %}
+    <link rel="stylesheet"  href="{% static 'css/base.css' %}"> <!-- Lien vers votre fichier CSS -->
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	
+</head>
+<body>
+	<header>
+		<span>Moving</span>
+		<nav class="navbar">
+			<ul>
+				{% if request.user.is_authenticated %}
+					<li {% if section == "connected" %} class="selected"{% endif %}>
+					<a href="{% url 'company_page' %}">Page</a>
+					</li>
+					<li {% if section == "connected" %} class="selected"{% endif %}>
+					<a href="{% url 'devis_available' %}">Devis disponibles</a>
+					</li>
+					<li {% if section == "connected" %} class="selected"{% endif %}>
+						{{ company.companyname }}</li>
+					<li {% if section == "connected" %} class="selected"{% endif %}> 
+						<a href="{% url 'logout' %}">Logout</a></li>
+			</ul>
+				{% else %}
+					<a href="#home">Home</a>
+					<a href="#review">Review</a>
+					<a href="#contact">Contact us</a>
+					<a href="{% url 'company_register' %}">Vous avez une société de déménagement</a></li>
+					<a href="{% url 'login' %}">Login</a>
+		</nav>
+		<div class="icons">
+			<i class='bx bx-search-alt-2' id="search-icon"></i>
+			<i class='bx bx-menu' id="menu-icon"></i>
+		</div>
+		<form class="search-form" action="{% url 'search_company' %}" method="get">
+			<input type="search" name="query" id="search-box" placeholder="search a moving company">
+		</form>
+		<div id="search-results" class="search-results">
+			
+		</div> 
+		{% endif %}
+	</header>
+		{% load static %}
+		{% block content %}
+		{% endblock %}
+		<footer>
+			<p>© 2024 Déménagement 365 - Tous droits réservés</p>
+		</footer>
+	
+</body>
+<script>
+	let navbar = document.querySelector('.navbar');
+
+	document.querySelector('#menu-icon').onclick= () => {
+		navbar.classList.toggle('active');
+		searchForm.classList.remove('active');
+		if (searchForm.classList.contains('modif')) {
+			searchForm.classList.remove('modif');
+		}
+		if ($('#search-results').hasClass('active')) {
+			$('#search-results').removeClass('active');
+		}
+	}
+
+	let searchForm = document.querySelector('.search-form');
+
+	document.querySelector('#search-icon').onclick= () => {
+		searchForm.classList.toggle('active');
+		navbar.classList.remove('active');
+	}
+
+	window.onscroll = () => {
+		navbar.classList.remove('active');
+		searchForm.classList.remove('active');
+		if (searchForm.classList.contains('modif')) {
+			searchForm.classList.remove('modif');
+		}
+		if ($('#search-results').hasClass('active')) {
+			$('#search-results').removeClass('active');
+		}
+		
+	}
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#search-box').on('input', function() {
+			var query = $(this).val();
+			if(query.length > 0) {
+				$.ajax({
+					url: '{% url "search_company"%}',
+					data: {
+						'query': query
+					},
+					dataType: 'json',
+					success: function(data) {
+						$('#search-results').empty();
+						if (data.length > 0) {
+							data.forEach(function(item) {
+								var link = '<a href="company_info/' + item.id + '" class="search-result">' + item.companyname + '</a>';
+            					$('#search-results').append(link);
+								$('#search-results').addClass('active');
+								$('.search-form').addClass('modif');
+							});
+						} else {
+							$('#search-results').removeClass('active');
+							$('.search-form').removeClass('modif');
+						}
+					}
+				});
+			} else {
+				$('#search-results').removeClass('active');
+				$('.search-form').removeClass('modif');
+			}
+		});
+		$('.search-form').submit(function(e) {
+			e.preventDefault(); // Empêche la soumission traditionnelle du formulaire
+			var query = $('#search-box').val();
+			if(query.length > 0) {
+				$.ajax({
+					url: '{% url "search_company" %}',
+					data: { 'query': query },
+					dataType: 'json',
+					success: function(data) {
+						$('#search-results').empty();
+						if(data.length > 0) {
+							data.forEach(function(item) {
+								$('#search-results').append('<p class="search-result">' + item.companyname + '</p>');
+							});
+							$('#search-results').addClass('active');
+							$('.search-form').addClass('modif');
+						} else {
+							$('#search-results').append('<p class="search-result"> No companies found</p>');
+							$('#search-results').addClass('active');
+							$('.search-form').addClass('modif');
+						}
+					}
+				});
+			} else {
+				$('#search-results').empty();
+				$('#search-results').removelass('active');
+				$('.search-form').removeClass('modif');
+			}
+		});
+	});
+</script>
+
+</html> 

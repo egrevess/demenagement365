@@ -1,0 +1,79 @@
+body, h1, h2, h3, p, ul, li, nav, section, footer {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body {
+	background: url('../images/2065277.jpg') no-repeat;
+	background-size: cover;
+	background-position: center;
+
+}
+
+header {
+    background: transparent;
+	backdrop-filter: blur(20px);
+    color: #fff;
+    padding: 2em 0;
+	box-shadow: 0 0 10px rgba(0, 0, 0, .2); /* Ombre plus prononcée */
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10%;
+}
+
+nav .navbar {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar li {
+    margin: 0;
+}
+
+.dropdown-content {
+	display: none;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#services, #testimonials, #contact {
+    background-size: cover;
+    background-position: center;
+    padding: 50px 0;
+}
+
+/*
+.container {
+    max-width: 1140px; 
+    margin: auto; 
+    padding: 20px; 
+}*/
+
+.container {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Utilisez vh pour garantir que le conteneur prend toute la hauteur de la fenêtre du navigateur */
+    width: 100vw; 
+  }
+
+footer {
+    background-image: linear-gradient(to right, #d8a8e6 0%, #c8a8f8 50%, #b8a8f8 100%);
+    color:  #fff;
+    text-align: center;
+    padding: 1em 0;
+	flex-shrink: 0;
+	margin-top: auto;
+}

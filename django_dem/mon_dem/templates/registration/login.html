@@ -1,0 +1,47 @@
+{% extends "base_form.html" %}
+   {% block content %}
+   {% load static %}
+   <link rel="stylesheet" href="{% static 'css/login.css' %}">
+   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+   <div class="body_log">
+     <div class="login-form">
+		<h1>Login</h1>
+       <form action="{% url 'login' %}" method="post">
+         {% csrf_token %}
+         <input type="hidden" name="next" value="{{ next }}" />
+		 <!-- Personnalisation du champ username -->
+		 <div class="form-group"> 
+            {{ form.username }}
+            {{ form.username.errors }}
+			<i class='bx bxs-user'></i>
+        </div>
+        <!-- Personnalisation du champ password -->
+        <div class="form-group">
+            {{ form.password }}
+            {{ form.password.errors }}
+			<i class='bx bxs-lock-alt' ></i>
+        </div>
+		<script type="text/javascript">
+			document.addEventListener("DOMContentLoaded", function() {
+				// Sélectionne les champs par leur id et ajoute des placeholders
+				document.getElementById("id_username").setAttribute("placeholder", "Username");
+				document.getElementById("id_password").setAttribute("placeholder", "Password");
+			});
+		</script>
+		<div class="remember-forgot">
+			<label><input type="checkbox">Remember me</label>
+			<a href="#">Forgot password?</a>
+		</div>
+        <button type="submit" class="btn">Login</button>
+       </form>
+		<div class="register_link">
+			{% if form.errors %}
+				<p>Your username and password didn't match.
+					Please try again.</p>
+			{% else %}
+				<p> Don't have an account <a href="{% url 'company_register' %}">register here</a> </p>
+			{% endif %}
+		</div>
+     </div>
+	</div>
+{% endblock %}

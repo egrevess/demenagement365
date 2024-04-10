@@ -1,0 +1,84 @@
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	/*font-family: "Poppins, sans-serif;*/
+}
+
+.login-form {
+	width: 420px;
+	max-height: 90vh; /* 90% de la hauteur de la fenêtre d'affichage */ /* Permet le défilement vertical si le contenu excède la hauteur */
+	background: transparent;
+	border: 2px solid rgba(255, 255, 255, .2);
+	backdrop-filter: blur(20px);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	color: #fff;
+	border-radius: 10px;
+	padding: 30pX 40px;
+	align-items: center;
+	margin: auto; /* Ajouté pour assurer le centrage dans les dispositions flexibles */
+}
+
+
+.login-form h1 {
+	font-size: 36px;
+	text-align: center;
+}
+
+.login-form .form-group {
+	width: 100%;
+	height: 50px;
+	margin: 30px 0;
+	text-align: center;
+	/* Ajouté pour positionner absolument les icônes par rapport à ce conteneur */
+}
+
+#id_name, #id_firstname, #id_phonenumber, #id_email{
+	width: calc(100% - 65px); /* Ajustement pour tenir compte de l'icône à l'intérieur */
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 40px;
+	font-size: 16px;
+	color: #fff;
+	padding: 20px 45px 20px 20px;
+}
+
+#id_name::placeholder, #id_firstname::placeholder, #id_phonenumber::placeholder, #id_email::placeholder{
+    color: #fff; /* Couleur du texte du placeholder */
+    /* Vous pouvez ajouter d'autres styles de placeholder ici */
+}
+
+.form-group i {
+	position: absolute;
+	right: 30px;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 20px;
+
+}
+
+.checkbox { 
+	display: flex;
+	gap: 5px;
+	margin-bottom: 20px;
+}
+
+.login-form .btn {
+	width: 100%;
+	height: 45px;
+	background-image: linear-gradient(to right, #d8a8e6 0%, #c8a8f8 50%, #b8a8f8 100%);
+	border: none;
+	outline: none;
+	border-radius: 40px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	cursor: pointer;
+	font-size: 16px;
+	color: #fff;
+	font-weight: 600;
+}
+
+

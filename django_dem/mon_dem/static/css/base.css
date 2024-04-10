@@ -1,0 +1,217 @@
+body, h1, h2, h3, p, ul, li, nav, section, footer {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*flex-direction: column;*/
+}
+
+:root {
+	--hover-color-text: plum;
+}
+
+html {
+	font-size: 100%;
+	overflow-x: hidden;
+	scroll-padding-top: 5rem;
+	scroll-behavior: smooth;
+}
+
+/* Styles pour la barre de défilement verticale */
+html::-webkit-scrollbar {
+    width: .6rem; /* Largeur de la barre de défilement */
+}
+
+html::-webkit-scrollbar-track {
+    background: transparent; /* Fond de la piste de défilement */
+}
+
+html::-webkit-scrollbar-thumb {
+    background: #b8a8f8; /* Couleur de la "petite barre" de défilement */
+    border-radius: 10px; /* Arrondit les coins de la barre de défilement */
+	height: .5rem;
+}
+
+/* Style pour :hover sur la barre de défilement pour la rendre un peu plus visible lors du survol */
+html::-webkit-scrollbar-thumb:hover {
+    background: #d8a8e6;
+}
+
+body {
+	background: url('../images/2065277.jpg') no-repeat;
+	background-size: cover;
+	background-position: center;
+    background-attachment: fixed; /* L'image ne défile pas avec le contenu */
+	overflow: auto;
+	display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background: transparent;
+	backdrop-filter: blur(20px);
+    color: #fff;
+    padding: 1.7rem 7%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2); /* Ombre plus prononcée */
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	/*position: fixed;*/
+	top:0; left:0; right:0;
+	z-index: 1000;
+}
+
+header .icons i{
+	color: #fff;
+	font-size: 1.7rem;
+	margin-left: .4rem;
+}
+
+header .icons i:hover{
+	color: var(--hover-color-text);
+}
+
+#menu-icon {
+	display: none;
+}
+
+@media (max-width:991px) {
+	
+	#menu-icon {
+		display: inline-block;
+	}
+
+	header .navbar {
+		position: absolute;
+		top: 100%; right: -100%;
+		width: 15rem;
+		height: max-content;
+		z-index: 2;
+		overflow-x: hidden;
+	}
+	
+	header .navbar.active {
+		right: 0;
+	}
+
+	header .navbar a {
+		margin: .7rem;
+		padding: .5rem;
+		display: block;
+		font-size: 17px;
+		color: #fff;
+	}
+
+	header .search-form {
+		width: 90%;
+		right: 2rem;
+	}
+}
+
+header .search-form {
+	position: absolute;
+	top: 115%; right: 7%;
+	width: 30rem;
+	height: 3rem;
+	display: flex;
+	align-items: center;
+	transform: scaleY(0);
+	transform-origin: top;
+	background: rgb(216,183,241);
+	border: 2px solid rgba(255, 255, 255, .2);
+	backdrop-filter: blur(20px);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	border-radius: 10px;
+}
+
+header .search-form.active {
+	transform: scaleY(1);
+}
+
+header .search-form.modif {
+	transform: scaleY(1);
+	border-radius: 10px 10px 0 0;
+}
+
+header .search-form input {
+	width: 100%;
+	height: 100%;
+	font-size: 1rem;
+	color: #fff;
+	padding: 1rem;
+	text-transform: none;
+	outline: none;
+	border: none;
+	background: transparent;
+}
+
+header .search-results {
+	position: absolute;
+	top: 162%; 
+	right: 7%; 
+	width: 30rem;
+	display: flex;
+	align-items: center;
+	background: rgb(216,183,241);;
+	backdrop-filter: blur(20px);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optionnel : ajoute une ombre douce pour la séparation */
+	border-radius: 0 0 10px 10px; 
+	border: 2px solid rgba(255, 255, 255, .2);
+	border-top: none;
+	transform: scaleY(0);
+	transform-origin: top;
+	max-height: 300px; /* Hauteur maximale avant de défiler, ajustez selon vos besoins */
+	overflow-y: auto;
+	z-index: 999;
+}
+
+header .search-results.active {
+	transform: scaleY(1);
+}
+
+header .search-result {
+	text-decoration: none;
+	background: transparent;
+	color: #fff;
+	width: 100%;
+	height: 100%;
+	font-size: 1rem;
+	padding: 1rem;
+	margin: 0.5rem 0; /* Ajoute un peu d'espace entre chaque résultat */
+}
+
+#search-box::placeholder{
+	color: #fff;
+}
+
+.navbar {
+	margin-left: 30%;
+}
+
+.navbar a {
+    margin: 0 .8rem;
+	color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+	color: var(--hover-color-text);
+}
+
+nav > ul > li {
+	float: left;
+	position: relative;
+	list-style-type: none;
+	gap: 1rem;
+
+}
+
+footer {
+    background-image: linear-gradient(to right, #d8a8e6 0%, #c8a8f8 50%, #b8a8f8 100%);
+    color:  #fff;
+    text-align: center;
+    padding: 1em 0;
+	flex-shrink: 0;
+	margin-top: auto;
+}

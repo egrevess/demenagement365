@@ -1,0 +1,64 @@
+
+	{% extends "base.html" %}
+	{% block content %}
+	{% load static %}
+    <link rel="stylesheet"  href="{% static 'css/home.css' %}">
+    <section class="home" id="home">
+		<div class="content"> 
+			<h2>Créer un devis en 4 étapes </h2>
+			<p>Le devis sera envoyé à plusieurs sociétés de déménagements qui vous contacteront dans les prochains jours.</p>
+			<a href="{% url 'client_register' %}" class="button-devis">Add devis</a>
+
+		</div>
+        <!-- Détails des services ici -->
+    </section>
+
+	<section class="avis" id="review">
+		<h1> What our client says</h1>
+		<div class="row">
+			{% if reviews %}
+				{% for review in reviews %}
+				<div class="avis-col">
+					<i class='bx bxs-user-circle'></i>
+					<div class="corps">
+						<h3 class="company">  {{review.company}}</h3>
+						<div class="rating" data-rating="{{ review.rating }}">
+						</div>
+						<h3 class="client" >{{review.client.firstname}} {{review.client.name}}</h3>
+						<p> {{review.comment}}</p>
+					</div>
+				</div>
+				{% endfor %}
+			{% endif %}
+		</div>
+	</section>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			// Lire le rating du conteneur
+			var ratingContainers = document.querySelectorAll('.rating');
+			ratingContainers.forEach(function(container) {
+			var rating = parseFloat(container.getAttribute('data-rating'));
+			var maxRating = 5;
+			var htmlContent = '';
+		
+			// Générer les étoiles pleines
+			for (var i = 1; i <= rating; i++) {
+				htmlContent += "<i class='bx bxs-star'></i>";
+			}
+			// Générer les étoiles vides
+			if (rating % 1 !== 0) { // Vérifie s'il y a une partie décimale
+				htmlContent += "<i class='bx bxs-star-half'></i>";
+				rating = Math.ceil(rating); // Arrondir au nombre entier suivant pour la logique des étoiles vides
+			}
+			for (var i = rating + 1; i <= maxRating; i++) {
+				htmlContent += "<i class='bx bx-star'></i>";
+			}
+		
+			// Mettre à jour le HTML du conteneur
+			container.innerHTML = htmlContent;
+		});
+	});
+	</script>
+	{% endblock %}
+
+
